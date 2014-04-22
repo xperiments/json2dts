@@ -10,29 +10,78 @@
 		window.onload =function(){
 
 			var input = ace.edit("input");
-				input.setTheme("ace/theme/monokai");
+				input.setTheme("ace/theme/tomorrow_night");
 				input.getSession().setMode("ace/mode/json");
 
+			var isJsonValid = false;
+			var errorTimeout = 0;
+			input.getSession().on("changeAnnotation", function(){
+
+				var annot = input.getSession().getAnnotations();
+				isJsonValid = annot.length == 0;
+				document.getElementById('error').innerText = isJsonValid ? "":"Invalid JSON";
+				document.getElementById('error').style.display = isJsonValid ? "none":"block";
+
+			});
+
 			var output = ace.edit("output");
-				output.setTheme("ace/theme/monokai");
+				output.setTheme("ace/theme/tomorrow_night");
 				output.getSession().setMode("ace/mode/typescript");
 
 			var c = new json.Json2dts();
+			var saveButton = document.getElementById('save');
 			document.getElementById('process').addEventListener('click', function()
 			{
-				c.parse( JSON.parse(input.getValue()||"{}") || {},"json","com.google.maps" );
-				output.setValue( c.getCode() );
+				document.getElementById('error').style.display = "none";
+				if( !isJsonValid ) return;
+				var moduleName = document.getElementById('module').value
+				var jsonName = document.getElementById('json').value;
+				var objectToParse = JSON.parse(input.getValue());
+				if( toString.call(objectToParse) === '[object Array]' )
+				{
+					document.getElementById('error').innerText = "The json root is an array, only the first entity will be processed"
+					document.getElementById('error').style.display = "block";
+					objectToParse = objectToParse[0];
+				}
+				c.parse( objectToParse,jsonName,moduleName );
+				var code = c.getCode();
+				output.setValue( code );
+				saveButton.href = 'data:text/plain,' + encodeURIComponent(code);
+				saveButton.setAttribute("download",moduleName+'.'+jsonName+'.d.ts');
+
 			});
+
 		}
+
+
 	</script>
 
 </head>
 <body>
-<h3>json2dts. Convert JSON to Typescript Declaration Interfaces <span class="version">( Alpha )</span></h3>
-<div id="input" class="ace"></div>
-<div id="output" class="ace"></div>
-<a id="process">Process</a>
+<form action="" method="post" class="dark-matter">
+	<div class="header">json2dts. <span>JSON => Typescript .d.ts</span></div>
 
+	<label>
+		<span id="muduleLabel">&nbsp;JSON Name:</span>
+		<input id="json" type="text" name="name" placeholder="Example" value="Example"/>
+		<span id="muduleLabel">&nbsp;Module Name:</span>
+		<input id="module" type="text" name="name" placeholder="json2dts.typedjson" value="json2dts.typedjson"/>
+		<a id="process" class="button process">PROCESS</a>
+		<a id="save" class="button process" download="">SAVE</a>
+		<div style="position: relative; float: right">
+			<a href="https://twitter.com/share" class="twitter-share-button" data-size="medium" data-related="xperiments" data-hashtags="typescript" data-text="json2dts. Convert JSON to Typescript Declaration Interfaces http://xperiments.github.io/json2dts" data-url="xperiments.github.io/json2dts/" style="float:right;">Tweet</a><br/>
+			<iframe src="http://ghbtns.com/github-btn.html?user=xperiments&repo=json2dts&type=fork" allowtransparency="true" frameborder="0" scrolling="0" width="62" height="20"></iframe>
+		</div>
+	</label>
+	<div id="error">error</div>
+	<div id="input" class="ace">{
+}</div>
+	<div id="output" class="ace"></div>
+</form>
+
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </body>
 </html>
 
