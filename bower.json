@@ -1,0 +1,20 @@
+{
+  "name": "json2dts",
+  "main": "json2dts.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/xperiments/json2dts",
+  "authors": [
+    "Pedro Casaubon <xperiments@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ace-builds": "~1.1.3"
+  }
+}
