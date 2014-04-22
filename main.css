@@ -70,6 +70,7 @@ a:hover {
 	position: relative;
 	margin-left: 20px;
 	margin-top: 13px;
+	cursor: pointer;
 }
 
 h3{
