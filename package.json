@@ -1,0 +1,27 @@
+{
+  "name": "json2dts",
+  "version": "0.0.1",
+  "description": "Convert JSON to Typescript Definition File",
+  "main": "dist/json2dts.js",
+  "bin": "dist/cli",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xperiments/json2dts.git"
+  },
+  "keywords": [
+    "json",
+    "typescript"
+  ],
+  "author": "Pedro Casaubon <xperiments@gmail.com> (http://www.xperiments.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xperiments/json2dts/issues"
+  },
+  "homepage": "https://github.com/xperiments/json2dts",
+  "dependencies": {
+    "yargs": "^3.15.0"
+  }
+}
