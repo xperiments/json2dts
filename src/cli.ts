@@ -5,7 +5,7 @@ var toValidJSON = json2dts.toValidJSON;
 var yargs = require('yargs');
 function getArgs() {
     var args = yargs
-        .usage('Converts JSON to Typescript Definition files.\n' +
+        .usage('Generates definition files for JSON like data.\n' +
         'Usage: $0 file.json')
         .describe('output', 'Specifies the file where to write the output')
         .alias('output', 'o')

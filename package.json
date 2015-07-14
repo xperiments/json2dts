@@ -1,7 +1,7 @@
 {
   "name": "json2dts",
-  "version": "0.0.1",
-  "description": "Convert JSON to Typescript Definition File",
+  "version": "0.0.2",
+  "description": "Generates definition files for JSON like data",
   "main": "dist/json2dts.js",
   "bin": "dist/cli",
   "scripts": {
